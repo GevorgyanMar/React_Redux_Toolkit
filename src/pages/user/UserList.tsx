@@ -51,8 +51,13 @@ const UserList: FC = () => {
 
       <Table columns={columns} data={renderData(users)} />
 
-      {showAddUserForm ? <AddUser closeForm={setAddShowUserForm}/> : null}
-      {showEditUserForm ? <EditUser   closeForm={setShowEditUserForm} initialValue={showEditUserForm} /> : null}
+      {showAddUserForm ? <AddUser closeForm={setAddShowUserForm} /> : null}
+      {showEditUserForm ? (
+        <EditUser
+          closeForm={setShowEditUserForm}
+          initialValue={showEditUserForm}
+        />
+      ) : null}
     </div>
   );
 };
