@@ -63,7 +63,7 @@ const UserForm: React.FC<userFormProps> = ({
             onChange={handleChange}
           />
         </div>
-        <button type="submit">{btnText} Todo</button>
+        <button type="submit">{btnText} User</button>
       </form>
     </Modal>
   );

@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchUsers } from "./controller";
 import { User } from "./type";
 
@@ -14,18 +14,23 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    addUser(state, action: PayloadAction<User>) {
-      state.users.push(action.payload);
+    addUser(state, action) {
+      state.users = action.payload;
     },
-    deleteUser(state, action: PayloadAction<number>) {
-      state.users = state.users.filter((user) => user.id !== action.payload);
+
+    deleteUser(state, action) {
+      const userIdToDelete = action.payload;
+      state.users = state.users.filter((user) => user.id !== userIdToDelete);
     },
-    updateUser(state, action: PayloadAction<User>) {
-      const { id, name, email, phone } = action.payload;
-      const userIndex = state.users.findIndex((user) => user.id === id);
-      if (userIndex !== -1) {
-        state.users[userIndex] = { id, name, email, phone };
-      }
+
+    updateUser(state, action) {
+      const updatedUser = action.payload;
+      state.users = state.users.map((user) => {
+        if (user.id === updatedUser.id) {
+          return updatedUser;
+        }
+        return user;
+      });
     },
   },
   extraReducers: (builder) => {

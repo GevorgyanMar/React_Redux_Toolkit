@@ -1,9 +1,10 @@
 {
-  "todos": [
+  "users": [
     {
       "id": 1,
-      "text": "buy milk",
-      "completed": false
+      "name": "Lean44ne Grahame",
+      "email": "wedhg@gmail.com",
+      "phone": "355410079414852"
     }
   ]
 }

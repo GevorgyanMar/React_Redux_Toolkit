@@ -6,7 +6,7 @@ import { addUser } from "../../toolkit/userSlices/controller";
 const AddUser: FC<{ closeForm: (arg: boolean) => void }> = ({ closeForm }) => {
   const dispatch = useAppDispatch();
   const initialValue = {
-    id: 1,
+    id: Math.floor(Math.random()),
     name: "",
     email: "",
     phone: "",
