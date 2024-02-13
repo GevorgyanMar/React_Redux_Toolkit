@@ -7,10 +7,7 @@ type ModalProps = {
 const Modal: FC<ModalProps> = ({ children }) => {
   return (
     <div className="modal">
-      <div className="modal-content">
-        {/* <span className="modal-close">&times;</span> */}
-        {children}
-      </div>
+      <div className="modal-content">{children}</div>
     </div>
   );
 };

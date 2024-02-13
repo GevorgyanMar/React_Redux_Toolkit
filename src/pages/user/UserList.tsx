@@ -47,14 +47,16 @@ const UserList: FC = () => {
 
   return (
     <div>
-      <button onClick={() => setAddShowUserForm(true)}>create user</button>
+      <button onClick={() => setAddShowUserForm(true)}>Create user</button>
 
       <Table columns={columns} data={renderData(users)} />
 
-      {showAddUserForm ? <AddUser closeForm={setAddShowUserForm} /> : null}
+      {showAddUserForm ? (
+        <AddUser onClose={() => setAddShowUserForm(false)} />
+      ) : null}
       {showEditUserForm ? (
         <EditUser
-          closeForm={setShowEditUserForm}
+          //onClose={() => setShowEditUserForm()}
           initialValue={showEditUserForm}
         />
       ) : null}

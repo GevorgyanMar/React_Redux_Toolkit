@@ -4,15 +4,15 @@ import { useAppDispatch } from "../../toolkit/store";
 import { updateUser } from "../../toolkit/userSlices/controller";
 
 interface EditUserProps {
-  closeForm: (arg: any) => void;
+  //  onClose: VoidFunction;
   initialValue: userType;
 }
 
-const EditUser: FC<EditUserProps> = ({ closeForm, initialValue }) => {
+const EditUser: FC<EditUserProps> = ({ initialValue }) => {
   const dispatch = useAppDispatch();
   const handleSubmit = (values: any) => {
     dispatch(updateUser(values));
-    //closeForm(false);
+    // onClose()
   };
 
   return (

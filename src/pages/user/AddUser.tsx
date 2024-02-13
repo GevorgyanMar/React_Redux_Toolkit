@@ -3,7 +3,7 @@ import TodoForm from "./UserForm";
 import { useAppDispatch } from "../../toolkit/store";
 import { addUser } from "../../toolkit/userSlices/controller";
 
-const AddUser: FC<{ closeForm: (arg: boolean) => void }> = ({ closeForm }) => {
+const AddUser: FC<{ onClose: VoidFunction }> = ({ onClose }) => {
   const dispatch = useAppDispatch();
   const initialValue = {
     id: Math.floor(Math.random()),
@@ -14,7 +14,7 @@ const AddUser: FC<{ closeForm: (arg: boolean) => void }> = ({ closeForm }) => {
 
   const handleSubmit = (values: any) => {
     dispatch(addUser(values));
-    // closeForm(false);
+    onClose();
   };
 
   return <TodoForm initialValue={initialValue} handleSubmit={handleSubmit} />;

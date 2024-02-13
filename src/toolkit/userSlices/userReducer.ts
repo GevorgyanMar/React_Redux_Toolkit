@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUsers } from "./controller";
+import { deleteUser, fetchUsers, updateUser } from "./controller";
 import { User } from "./type";
 
 type userState = {
@@ -14,32 +14,40 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    addUser(state, action) {
+    setUsers(state, action) {
       state.users = action.payload;
     },
-
-    deleteUser(state, action) {
+    updateUserSuccess(state, action) {
+      const updatedUser = action.payload;
+      state.users = state.users.map((user) =>
+        user.id === updatedUser.id ? updatedUser : user
+      );
+    },
+    deleteUserSuccess(state, action) {
       const userIdToDelete = action.payload;
       state.users = state.users.filter((user) => user.id !== userIdToDelete);
-    },
-
-    updateUser(state, action) {
-      const updatedUser = action.payload;
-      state.users = state.users.map((user) => {
-        if (user.id === updatedUser.id) {
-          return updatedUser;
-        }
-        return user;
-      });
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload;
     });
+    // builder.addCase(updateUser.fulfilled, (state, action) => {
+    //   const updatedUser = action.payload;
+    //   state.users = state.users.map((user) => {
+    //     if (user.id === updatedUser.id) {
+    //       return updatedUser;
+    //     }
+    //     return user;
+    //   });
+    // });
+    // builder.addCase(deleteUser.fulfilled, (state, action) => {
+    //   const userIdToDelete = action.payload;
+    //   state.users = state.users.filter((user) => user.id !== userIdToDelete);
+    // });
   },
 });
 
-export const { addUser, deleteUser, updateUser } = userSlice.actions;
+export const {} = userSlice.actions;
 
 export default userSlice.reducer;

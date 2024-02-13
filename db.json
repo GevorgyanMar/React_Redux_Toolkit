@@ -1,8 +1,14 @@
 {
   "users": [
     {
+      "id": 1,
+      "name": "Mariam",
+      "email": "Mariam@gmail.com",
+      "phone": "098888888"
+    },
+    {
       "id": 2,
-      "name": "h",
+      "name": "Mariam Gevorgayn",
       "email": "nelisahakyan341@gmail.com",
       "phone": "355410079414852"
     }
