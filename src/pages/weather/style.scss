@@ -1,0 +1,34 @@
+.weather-forecast-block {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  p,
+  h1 {
+    font-size: 14px;
+  }
+}
+
+.search-filed {
+  max-width: 200px;
+  width: 100%;
+}
+.weather-forecast-flex {
+  margin-top: 20px;
+}
+
+.day-weather-block {
+  ul {
+    li {
+      max-width: 200px;
+      width: 100%;
+
+      border-bottom: 1px solid #ab97ffc2;
+      padding: 10px 2px;
+      background-color: #ab97ffc2;
+      list-style: none;
+      margin-top: 4px;
+    }
+  }
+}

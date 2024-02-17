@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.menu-bar {
+  width: 100%;
+  padding: 10px 5px;
+  background-color: rgb(145, 166, 167);
+  ul {
+    display: flex;
+    justify-content: center;
+    li {
+      list-style: none;
+      max-width: 100px;
+      width: 100%;
+      a {
+        text-decoration: none;
+        font-size: 16px;
+        color: #000;
+        font-weight: 300;
+      }
+    }
+  }
+}

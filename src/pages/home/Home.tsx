@@ -1,13 +1,7 @@
 import React, { FC } from "react";
 
-import User from "../user/User";
-
 const Home: FC = () => {
-  return (
-    <div>
-      <User />
-    </div>
-  );
+  return <div>Hello Home</div>;
 };
 
 export default Home;
