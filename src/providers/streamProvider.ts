@@ -1,6 +1,6 @@
 class StreamProvider {
   stream: MediaStream | null = null;
-  chunks: BlobPart[] = [];
+
   private async createStream(mic: MediaDeviceInfo, camera: MediaDeviceInfo) {
     this.stream = await navigator.mediaDevices.getUserMedia({
       video: { deviceId: camera.deviceId },
@@ -8,9 +8,12 @@ class StreamProvider {
     });
   }
 
-  async onStream(mic: MediaDeviceInfo | null, camera: MediaDeviceInfo | null) {
+  async startStream(
+    mic: MediaDeviceInfo | null,
+    camera: MediaDeviceInfo | null
+  ) {
     if (this.stream) {
-      this.offStream();
+      this.stopStream();
     }
     if (!mic || !camera) {
       return;
@@ -18,14 +21,18 @@ class StreamProvider {
     await this.createStream(mic, camera);
   }
 
-  offStream() {
+  stopStream() {
     if (this.stream) {
       this.stream.getTracks().forEach((track) => track.stop());
       this.stream = null;
     }
   }
-  addChunk(chunk: BlobPart) {
-    this.chunks.push(chunk);
+
+  async getStream() {
+    return await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
   }
 }
 

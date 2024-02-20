@@ -41,8 +41,8 @@ const WeatherComponent: FC = () => {
     } else {
       dispatch(
         fetchCurrentWeather({
-          latitude: latitude,
-          longitude: longitude,
+          latitude,
+          longitude,
         })
       );
     }
@@ -50,13 +50,9 @@ const WeatherComponent: FC = () => {
 
   const showFiveDatWeather = (city?: string) => {
     if (city) {
-      dispatch(
-        fetchForecastWeather({ latitude: null, longitude: null, city: city })
-      );
+      dispatch(fetchForecastWeather({ latitude, longitude, city }));
     } else {
-      dispatch(
-        fetchForecastWeather({ latitude: latitude, longitude: longitude })
-      );
+      dispatch(fetchForecastWeather({ latitude, longitude }));
     }
   };
 

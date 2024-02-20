@@ -1,65 +1,55 @@
-import React, { FC, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import {
-  selectedCameraSelector,
-  selectedMicSelector,
-} from "../../toolkit/mediaSlices/mediaSelector";
-import { streamProvider } from "../../providers/streamProvider";
-import MediaList from "./MediaList";
+import React, { FC, useEffect, useState } from "react";
+import MediaStream from "./MediaStream";
+import { recordingDBProvider } from "../../providers/recordingDBProvider";
 import { devicesProvider } from "../../providers/devicesProvider";
+import { Chunk } from "../../types/types";
+import { recorderProvider } from "../../providers/recorderProvider";
+import { streamProvider } from "../../providers/streamProvider";
 import { dbConnection } from "../../providers/DatabaseProvider";
+import MediaList from "./MediaList";
 
-type us = {
-  userId: string;
-  streamId: string;
-};
 const MediaComponent: FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const selectedMic = useSelector(selectedMicSelector);
-  const selectedCamera = useSelector(selectedCameraSelector);
-
-  useEffect(() => {
-    devicesProvider.getDevices();
-  }, []);
+  const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
     dbConnection.openDB();
+    devicesProvider.getDevices();
   }, []);
 
-  useEffect(() => {
-    if (selectedMic && selectedCamera) {
-      startStream();
+  const toggleRecording = async () => {
+    const stream = await streamProvider.getStream();
+    isRecording ? recorderProvider.stop() : recorderProvider.start(stream);
+    setIsRecording((isRecording) => !isRecording);
+  };
+
+  const onDownload = async () => {
+    const chunks = (await recordingDBProvider.getItems()) as Chunk[];
+    if (!chunks.length) {
+      return;
     }
-  }, [selectedMic, selectedCamera]);
-
-  const startStream = async () => {
-    try {
-      await streamProvider.onStream(selectedMic, selectedCamera);
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = streamProvider.stream;
-        videoRef.current.autoplay = true;
-        videoRef.current.play();
-      }
-      const videoData: us = {
-        userId: "someUserId",
-        streamId: "someStreamId",
-      };
-
-      dbConnection.addItem(videoData);
-    } catch (error) {
-      console.error("Error starting stream:", error);
-    }
+    const blob = new Blob(
+      chunks.map((chunk) => chunk.data),
+      { type: "video/webm" }
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "recording.webm";
+    a.click();
   };
 
   return (
     <div>
-      {<video ref={videoRef}></video>}
+      <button onClick={toggleRecording}>
+        {isRecording ? "Stop" : "Start"} recording
+      </button>
+      {isRecording ? (
+        <button onClick={onDownload}>Download recording</button>
+      ) : null}
 
-      <button onClick={() => startStream()}>Start</button>
+      <MediaStream />
 
-      {/* <MediaList /> */}
+      <MediaList isRecording={isRecording} />
     </div>
   );
 };

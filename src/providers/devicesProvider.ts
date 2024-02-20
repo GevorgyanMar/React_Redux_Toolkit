@@ -7,6 +7,10 @@ import {
   setSpeakers,
 } from "../toolkit/mediaSlices/mediaReducer";
 import { store } from "../toolkit/store";
+interface MediaDeviceInfo {
+  deviceId: string;
+  label: string;
+}
 
 class DevicesProvider {
   private isRequested: boolean = false;
@@ -48,9 +52,9 @@ class DevicesProvider {
       store.dispatch(setCameras(videoInputs));
       store.dispatch(setSpeakers(audioOutputs));
 
-      const selectedCamera = videoInputs.length > 0 ? videoInputs[0] : null;
-      const selectedMic = audioInputs.length > 0 ? audioInputs[0] : null;
-      const selectedSpeaker = audioOutputs.length > 0 ? audioOutputs[0] : null;
+      const selectedCamera = videoInputs.length > 0 ? videoInputs : null;
+      const selectedMic = audioInputs.length > 0 ? audioInputs : null;
+      const selectedSpeaker = audioOutputs.length > 0 ? audioOutputs : null;
 
       if (selectedCamera) {
         store.dispatch(setSelectedCamera(selectedCamera));
@@ -62,6 +66,16 @@ class DevicesProvider {
         store.dispatch(setSelectedSpeaker(selectedSpeaker));
       }
     });
+  }
+
+  async onChangeMic(selectedMic: MediaDeviceInfo) {
+    store.dispatch(setMics(selectedMic));
+    this.getDevices();
+  }
+
+  async onChangeCamera(selectedCamera: MediaDeviceInfo) {
+    store.dispatch(setCameras(selectedCamera));
+    this.getDevices();
   }
 }
 

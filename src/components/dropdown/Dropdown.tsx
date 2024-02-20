@@ -1,15 +1,10 @@
 import React from "react";
-import "./style.scss"; // Import CSS file for styling
-
-type Option = {
-  id: number;
-  name: string;
-};
+import "./style.scss";
 
 type DropdownProps = {
-  options: Option[];
-  selectedOption: number | null;
-  onSelectChange: (optionId: number) => void;
+  options: [];
+  selectedOption: string | null;
+  onSelectChange: (optionId: string) => void;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -18,15 +13,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   onSelectChange,
 }) => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = parseInt(event.target.value);
+    const value = event.target.value;
     onSelectChange(value);
   };
 
   return (
     <div className="dropdown-container">
-      {/* <label htmlFor="dropdown" className="dropdown-label">
-        Select an option:
-      </label> */}
       <select
         id="dropdown"
         value={selectedOption || ""}
@@ -34,9 +26,9 @@ const Dropdown: React.FC<DropdownProps> = ({
         className="dropdown-select"
       >
         <option value="">Select...</option>
-        {options.map((option) => (
+        {options.map((option: any) => (
           <option key={option.id} value={option.id}>
-            {option.name}
+            {option.label}
           </option>
         ))}
       </select>

@@ -25,15 +25,6 @@ class DbConnection {
     };
   }
 
-  getItems() {
-    if (!this.db) {
-      console.error("Database is not open.");
-      return;
-    }
-
-    console.log("Retrieving items from the database.");
-  }
-
   async addItem(itemData: any) {
     if (!this.db) {
       console.error("Database is not open.");
@@ -49,10 +40,23 @@ class DbConnection {
       console.error("Error adding item:", error);
     }
   }
+
+  async getAllItems() {
+    if (!this.db) {
+      console.error("Database is not open.");
+      return;
+    }
+
+    try {
+      const transaction = this.db.transaction(["videoStream"], "readonly");
+      const store = transaction.objectStore("videoStream");
+      const items = await store.getAll();
+      console.log("All items retrieved:", items);
+      return items;
+    } catch (error) {
+      console.error("Error retrieving items:", error);
+    }
+  }
 }
 
 export const dbConnection = new DbConnection();
-
-// dbConnection.openDB();
-// dbConnection.getItems();
-// dbConnection.addItem();

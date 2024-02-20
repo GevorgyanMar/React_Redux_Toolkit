@@ -1,21 +1,63 @@
-import React, { useState } from "react";
-import Dropdown from "../../components/dropdown/Dropdown";
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import {
+  selectedCameraSelector,
+  selectedMicSelector,
+} from "../../toolkit/mediaSlices/mediaSelector";
+import { devicesProvider } from "../../providers/devicesProvider";
 
-const MediaList = () => {
-  const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+type ChunkType = {
+  deviceId: string;
+  label: string;
+};
 
-  const handleSelectChange = (optionId: number) => {
-    setSelectedOption(optionId);
+type Props = {
+  isRecording: boolean;
+};
+
+const MediaList: FC<Props> = ({ isRecording }) => {
+  const selectedMic = useSelector(selectedMicSelector);
+  const selectedCamera = useSelector(selectedCameraSelector);
+
+  const onChangeMic = (micInfo: ChunkType) => {
+    if (!isRecording) {
+      devicesProvider.onChangeMic(micInfo);
+    }
+  };
+
+  const onChangeCamera = (camInfo: ChunkType) => {
+    if (!isRecording) {
+      devicesProvider.onChangeCamera(camInfo);
+    }
   };
   return (
-    <div>
-      <Dropdown
-        options={options}
-        selectedOption={selectedOption}
-        onSelectChange={handleSelectChange}
-      />
-    </div>
+    <>
+      {selectedMic ? (
+        <div>
+          <h1>SelectedMic</h1>
+          <ul>
+            {selectedMic?.map((item: ChunkType, index: number) => (
+              <li key={index} onClick={() => onChangeMic(item)}>
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {selectedCamera ? (
+        <div>
+          <h1>SelectedCamera</h1>
+          <ul>
+            {selectedCamera?.map((item: ChunkType, index: number) => (
+              <li key={index} onClick={() => onChangeCamera(item)}>
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </>
   );
 };
 
