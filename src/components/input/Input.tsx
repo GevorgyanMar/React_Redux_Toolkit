@@ -1,25 +1,38 @@
 import React, { useState } from "react";
-
+import "./style.scss";
 interface InputProps {
-  onInputChange: (value: string) => void;
+  onChange: (value: string) => void;
+  type?: string;
+  value: string | number;
+  placeholder?: string;
+  name: string;
+  className?: string;
 }
 
-const Input: React.FC<InputProps> = ({ onInputChange }) => {
+const Input: React.FC<InputProps> = ({
+  onChange,
+  type = "text",
+  placeholder = "Enter value...",
+  name,
+  className,
+}) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
+
     setInputValue(newValue);
-    onInputChange(newValue);
+    onChange(newValue);
   };
 
   return (
-    <div className="input-container">
+    <div className={`input-container ${className}`}>
       <input
-        type="text"
+        type={type}
+        name={name}
         value={inputValue}
         onChange={handleChange}
-        placeholder="Enter value..."
+        placeholder={placeholder}
       />
     </div>
   );

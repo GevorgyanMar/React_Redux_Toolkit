@@ -1,10 +1,10 @@
 {
-  "users": [
+  "users": [],
+  "auth": [
     {
-      "id": 1,
-      "name": "Mariam77",
-      "email": "Mariam@gmail.com",
-      "phone": "098888888"
+      "username": "Mariam",
+      "password": "1234",
+      "id": 1
     }
   ]
 }

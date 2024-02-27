@@ -16,8 +16,8 @@ type Props = {
 };
 
 const MediaList: FC<Props> = ({ isRecording }) => {
-  const selectedMic = useSelector(selectedMicSelector);
-  const selectedCamera = useSelector(selectedCameraSelector);
+  const micList = useSelector(selectedMicSelector);
+  const cameraList = useSelector(selectedCameraSelector);
 
   const onChangeMic = (micInfo: ChunkType) => {
     if (!isRecording) {
@@ -32,11 +32,11 @@ const MediaList: FC<Props> = ({ isRecording }) => {
   };
   return (
     <>
-      {selectedMic ? (
+      {micList ? (
         <div>
           <h1>SelectedMic</h1>
           <ul>
-            {selectedMic?.map((item: ChunkType, index: number) => (
+            {micList?.map((item: ChunkType, index: number) => (
               <li key={index} onClick={() => onChangeMic(item)}>
                 {item.label}
               </li>
@@ -45,11 +45,11 @@ const MediaList: FC<Props> = ({ isRecording }) => {
         </div>
       ) : null}
 
-      {selectedCamera ? (
+      {cameraList ? (
         <div>
           <h1>SelectedCamera</h1>
           <ul>
-            {selectedCamera?.map((item: ChunkType, index: number) => (
+            {cameraList?.map((item: ChunkType, index: number) => (
               <li key={index} onClick={() => onChangeCamera(item)}>
                 {item.label}
               </li>

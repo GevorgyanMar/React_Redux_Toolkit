@@ -3,4 +3,5 @@ export const routerItems = [
   { label: "User", link: "/User" },
   { label: "Media", link: "/Media" },
   { label: "Weather", link: "/WeatherForecast" },
+  { label: "Chat", link: "/Chat" },
 ];

@@ -1,50 +1,57 @@
 import React, { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../toolkit/loginSlices/loginReducer";
-import { isLoginSelector } from "../../toolkit/loginSlices/loginSelector";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Input from "../../components/input/Input";
+import Button from "../../components/button/Button";
+import { loginUser } from "../../toolkit/authSlice/controller";
+import { selectError } from "../../toolkit/authSlice/authSelector";
+import { useAppDispatch } from "../../toolkit/store";
+import { Auth } from "../../toolkit/authSlice/type";
 
 const Login: FC = () => {
-  const isLogin = useSelector(isLoginSelector);
-  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError("Please enter both email and password.");
+  const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Please enter both email and password.");
       return;
     }
+    const userData = {
+      username,
+      password,
+    } as Auth;
 
-    dispatch(loginUser({ email, password }));
-    if (isLogin) {
+    try {
+      await dispatch(loginUser(userData));
       navigate("./Home");
+    } catch (error) {
+      alert("Something wrong");
     }
   };
-
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <div className="login-form">
+      <div className="login-form-content">
+        <h2>Login</h2>
+        <div>
+          <label>Email:</label>
+          <Input name="username" value={username} onChange={setUsername} />
+        </div>
+        <div>
+          <label>Password:</label>
+          <Input
+            name="password"
+            type="password"
+            value={password}
+            onChange={setPassword}
+          />
+        </div>
+
+        <Button onClick={handleLogin} label="Login" />
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button onClick={handleLogin}>Login</button>
     </div>
   );
 };

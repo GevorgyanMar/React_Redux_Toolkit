@@ -1,8 +1,9 @@
 import React, { FC } from "react";
+import "./style.scss";
 type Props = {
   onClick: VoidFunction;
   label: string;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   className?: string;
 };
 

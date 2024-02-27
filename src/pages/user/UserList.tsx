@@ -6,6 +6,8 @@ import Table from "../../components/table/Table";
 import { userDataSelector } from "../../toolkit/userSlices/userSelector";
 import { deleteUser } from "../../toolkit/userSlices/controller";
 import { useAppDispatch } from "../../toolkit/store";
+import Button from "../../components/button/Button";
+import "./style.scss";
 
 const UserList: FC = () => {
   const dispatch = useAppDispatch();
@@ -46,8 +48,8 @@ const UserList: FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => setAddShowUserForm(true)}>Create user</button>
+    <div className="user-block">
+      <Button onClick={() => setAddShowUserForm(true)} label="Create user" />
 
       <Table columns={columns} data={renderData(users)} />
 

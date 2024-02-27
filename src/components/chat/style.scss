@@ -1,0 +1,19 @@
+.chat-form {
+  max-width: 420px;
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #c1c0be;
+  border-radius: 5px;
+}
+.messages-list-item {
+  display: flex;
+  border: 1px solid rgb(255, 151, 0);
+  padding: 5px;
+  border-radius: 3px;
+  margin: 10px 0;
+  span {
+    &:nth-child(2) {
+      margin: 0 5px;
+    }
+  }
+}

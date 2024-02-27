@@ -9,17 +9,17 @@ import { streamProvider } from "../../providers/streamProvider";
 const MediaStream: FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const selectedMic = useSelector(selectedMicSelector);
-  const selectedCamera = useSelector(selectedCameraSelector);
+  const mic = useSelector(selectedMicSelector);
+  const camera = useSelector(selectedCameraSelector);
 
   useEffect(() => {
-    if (selectedMic && selectedCamera) {
+    if (mic && camera) {
       startStream();
     }
-  }, [selectedMic, selectedCamera]);
+  }, [mic, camera]);
 
   const startStream = async () => {
-    await streamProvider.startStream(selectedMic, selectedCamera);
+    await streamProvider.startStream(mic, camera);
 
     if (videoRef.current) {
       videoRef.current.srcObject = await streamProvider.getStream();

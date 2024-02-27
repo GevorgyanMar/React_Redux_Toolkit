@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import "./style.scss";
 
 interface TableColumn {
   key: string;
@@ -12,7 +13,7 @@ interface TableProps {
 
 const Table: FC<TableProps> = ({ columns, data }) => {
   return (
-    <table>
+    <table className="table-block">
       <thead>
         <tr>
           {columns.map((column) => (

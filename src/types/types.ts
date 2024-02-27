@@ -9,3 +9,10 @@ export type Defer<T> = {
   reject: (err: any) => void;
   reset: () => void;
 };
+
+export type Message = {
+  id: number;
+  username: string;
+  content: string;
+  date: string;
+};
